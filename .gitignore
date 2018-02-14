@@ -4,6 +4,9 @@
 .Trashes
 .Spotlight-V100
 *.swp
+/.build
+/Packages
+/*.xcodeproj
 
 ## Xcode build files
 DerivedData/
@@ -35,3 +38,7 @@ xcuserdata/
 
 ## Swift Package Manager
 .build/
+
+## Pods
+#
+Pods/
