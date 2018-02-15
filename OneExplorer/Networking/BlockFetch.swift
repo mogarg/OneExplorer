@@ -11,6 +11,7 @@ import Foundation
 class BlockFetch {
     
     typealias JSONDictionary = [String: Any]
+    typealias BlockReturn = (Block?, String)->()
     
     let defaultSession = URLSession(configuration: .default)
     
@@ -19,7 +20,7 @@ class BlockFetch {
     
     var lastBlock: Int?
     
-    func getChainInfo() {
+    func getChainInfo(completion: @escaping BlockReturn) {
         
     dataTask?.cancel()
     
@@ -36,7 +37,9 @@ class BlockFetch {
                 let response = response as? HTTPURLResponse,
                 response.statusCode == 200 {
                 self.updateChainInfo(data)
-                self.getBlockInfo()
+                self.getBlockInfo(){block, error in
+                    completion(block, error)
+                }
             }
         }
         
@@ -44,7 +47,7 @@ class BlockFetch {
     }
   }
     
-    func getBlockInfo() {
+    func getBlockInfo(completion: @escaping BlockReturn) {
         var postBody = JSONDictionary()
         var request: URLRequest
         var data: Data
@@ -78,7 +81,10 @@ class BlockFetch {
                 } else if let data = data,
                     let response = response as? HTTPURLResponse,
                     response.statusCode == 200 {
-                    self.updateBlockInfo(data)
+                    
+                    self.updateBlockInfo(data) {block, error in
+                        completion(block, error)
+                    }
                 }
                 
             }
@@ -105,7 +111,7 @@ class BlockFetch {
         self.lastBlock = lastBlock
     }
     
-    fileprivate func updateBlockInfo(_ data: Data) {
+    fileprivate func updateBlockInfo(_ data: Data, completion: @escaping BlockReturn) {
         var block: JSONDictionary?
         
         do {
@@ -127,7 +133,7 @@ class BlockFetch {
                               timeStamp: Date(), producer: previewProducer, signature: previewSignature,
                               prefix: previewPrefix)
             
-            print(block)
+            completion(block, errorMessage)
         }
     }
 }

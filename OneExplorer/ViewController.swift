@@ -11,13 +11,15 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var fetch: UIButton!
+    let service = BlockFetch()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        let fetch = BlockFetch()
-        fetch.getChainInfo()
+        service.getChainInfo(){block, error in
+            print(block!)
+        }
     }
 
     override func didReceiveMemoryWarning() {
