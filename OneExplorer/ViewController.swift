@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var number: UILabel!
     @IBOutlet weak var id: UILabel!
     @IBOutlet weak var prefix: UILabel!
+    @IBOutlet weak var previous: UILabel!
     
     let service = BlockFetch()
     
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
         signature.text = latestBlock!.signature
         producer.text = latestBlock!.producer
         id.text = latestBlock!.id
+        previous.text = latestBlock!.previous
     }
     
     override func didReceiveMemoryWarning() {
