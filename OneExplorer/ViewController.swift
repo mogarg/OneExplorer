@@ -36,7 +36,7 @@ class ViewController: UIViewController {
 
     func presentBlock(){
         number.text = String(describing: latestBlock!.number)
-        timestamp.text = String(describing: latestBlock!.timeStamp)
+        timestamp.text = latestBlock!.timeStamp
         prefix.text = String(describing: latestBlock!.prefix)
         signature.text = latestBlock!.signature
         producer.text = latestBlock!.producer

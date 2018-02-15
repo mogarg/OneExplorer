@@ -18,6 +18,8 @@ class BlockFetch {
     var dataTask: URLSessionDataTask?
     var errorMessage = ""
     
+    
+    
     var lastBlock: Int?
     
     func getChainInfo(completion: @escaping BlockReturn) {
@@ -130,11 +132,12 @@ class BlockFetch {
         let previewNumber = block!["block_num"] as? Int,
             let previewProducer = block!["producer"] as? String,
         let previewSignature = block!["producer_signature"] as? String,
-            let previewPrefix = block!["ref_block_prefix"] as? Int
+            let previewPrefix = block!["ref_block_prefix"] as? Int,
+            let previewDate = block!["timestamp"] as? String
         {
          
             let block = Block(id: previewId, number: previewNumber, previous: previewPrevious,
-                              timeStamp: Date(), producer: previewProducer, signature: previewSignature,
+                              timeStamp: previewDate, producer: previewProducer, signature: previewSignature,
                               prefix: previewPrefix)
             
             completion(block, errorMessage)
