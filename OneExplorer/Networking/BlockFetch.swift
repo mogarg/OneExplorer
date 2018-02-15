@@ -38,7 +38,11 @@ class BlockFetch {
                 response.statusCode == 200 {
                 self.updateChainInfo(data)
                 self.getBlockInfo(){block, error in
-                    completion(block, error)
+                    
+                    DispatchQueue.main.async {
+                        completion(block, error)
+                    }
+                    
                 }
             }
         }
